@@ -1,23 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import AddMovie from "./Components/AddMovie/AddMovie";
+import Footer from "./Components/Footer/Footer";
+import MovieList from "./Components/MovieList/MovieList";
+import Navbar from "./Components/Navbar/Navbar";
+import { moviesData } from "../src/Constants/Data";
+import { useState } from "react";
 
 function App() {
+  const [rate, setRate] = useState(0);
+  const [text, setText] = useState("");
+
+  const [movies, setMovies] = useState(moviesData);
+  const handleZid = (movie) => {
+    setMovies([...movies, movie]);
+  };
+  const fasakhMovie = (id) => {
+    setMovies(movies.filter((el) => el.id != id));
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Navbar setText={setText} setRate={setRate} />
+
+      <MovieList
+        movies={movies}
+        text={text}
+        rate={rate}
+        fasakhMovie={fasakhMovie}
+      />
+      <AddMovie handleZid={handleZid} />
+      <Footer />
     </div>
   );
 }
